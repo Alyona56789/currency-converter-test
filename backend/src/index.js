@@ -18,6 +18,8 @@ async function startServer() {
     await sequelize.authenticate();
     console.log('Соединение с БД установлено успешно.');
 
+    require('./config/scheduler');
+
     app.listen(PORT, () => {
       console.log(`Бэкенд запущен на порту ${PORT}`);
     });

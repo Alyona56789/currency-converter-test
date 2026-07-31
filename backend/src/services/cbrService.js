@@ -8,21 +8,20 @@ class CbrService {
     const parser = new XMLParser({ 
       ignoreAttributes: false,
       attributeNamePrefix: '@_',
-      isArray: (name) => name === 'Valute' 
+      isArray: (name) => name === 'Valute'
     });
     
     const result = parser.parse(response.data);
-    
     const valutes = result?.ValCurs?.Valute || [];
-    const dateStr = result.ValCurs['@_Date']; 
+    const dateStr = result.ValCurs['@_Date'];
 
     return valutes.map((item) => ({
-      charCode: item.CharCode,
+      code: item.CharCode, 
       name: item.Name,
       nominal: Number(item.Nominal),
       value: Number(String(item.Value).replace(',', '.')),
-      previous: 0, 
-      date: new Date(dateStr.split('.').reverse().join('-')), 
+      previous_value: Number(String(item.Previous).replace(',', '.')), 
+      date: new Date(dateStr.split('.').reverse().join('-')),
     }));
   }
 }
